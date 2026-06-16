@@ -1,4 +1,4 @@
-New PDF Generation Service
+PDF Generation Service
 ==========================
 
 A lightweight, maintainable PDF generation microservice that accepts JSON, merges it with an HTML/Handlebars template, and returns a PDF file. Designed to address:
