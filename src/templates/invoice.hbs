@@ -1,0 +1,70 @@
+<div class="header">
+  <h1>Invoice</h1>
+
+  <table style="width: 100%; border: none; border-collapse: collapse; margin-top: 10px;">
+    <tr>
+      <td style="vertical-align: top; width: 50%; border: none;">
+        <p><strong>From:</strong></p>
+        <p>{{company.name}}</p>
+        <p>{{company.address}}</p>
+        <p>{{company.phone}}</p>
+        <p>{{company.email}}</p>
+      </td>
+      <td style="vertical-align: top; width: 50%; border: none; text-align: right;">
+        <p><strong>To:</strong></p>
+        <p>{{customer.name}}</p>
+        <p>{{customer.address}}</p>
+        <p>{{customer.phone}}</p>
+        <p>{{customer.email}}</p>
+      </td>
+    </tr>
+  </table>
+
+  <p><strong>Invoice No:</strong> {{invoiceNumber}}</p>
+  <p><strong>Date:</strong> {{date}}</p>
+  <p><strong>Due Date:</strong> {{dueDate}}</p>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Description</th>
+      <th class="text-right">Unit Price</th>
+      <th class="text-right">Quantity</th>
+      <th class="text-right">Subtotal</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each items}}
+      <tr>
+        <td>{{this.description}}</td>
+        <td class="text-right">{{this.unitPrice}}</td>
+        <td class="text-right">{{this.quantity}}</td>
+        <td class="text-right">{{this.subtotal}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="3" class="text-right">Subtotal</td>
+      <td class="text-right">{{summary.subtotal}}</td>
+    </tr>
+    <tr>
+      <td colspan="3" class="text-right">Tax ({{summary.taxRate}}%)</td>
+      <td class="text-right">{{summary.taxAmount}}</td>
+    </tr>
+    <tr class="total-row">
+      <td colspan="3" class="text-right">Total</td>
+      <td class="text-right">{{summary.total}}</td>
+    </tr>
+  </tfoot>
+</table>
+
+<div style="margin-top: 20px;">
+  <p><strong>Payment Terms:</strong> {{paymentTerms}}</p>
+  <p><strong>Notes:</strong> {{notes}}</p>
+</div>
+
+<div class="footer">
+  <p>Thank you for your business.</p>
+</div>

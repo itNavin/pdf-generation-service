@@ -1,0 +1,18 @@
+{
+  "name": "pdf-generation-service",
+  "version": "1.0.0",
+  "description": "New PDF Generation Service - JSON to PDF (receipt) using HTML templates and wkhtmltopdf",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "express-handlebars": "^7.1.2",
+    "wkhtmltopdf": "^0.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
