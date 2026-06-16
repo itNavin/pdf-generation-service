@@ -111,7 +111,7 @@ router.post('/generate-pdf', async (req, res, next) => {
     const html = await renderHtml(template, dataForTemplate);
 
     // Convert HTML to PDF
-    const pdfStream = htmlToPdfStream(html);
+    const pdfStream = await htmlToPdfStream(html);
 
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader(

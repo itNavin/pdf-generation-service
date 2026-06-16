@@ -4,7 +4,7 @@ New PDF Generation Service
 A lightweight, maintainable PDF generation microservice that accepts JSON, merges it with an HTML/Handlebars template, and returns a PDF file. Designed to address:
 
 1. Resource Heavy – Reduce CPU/RAM usage compared to a full browser-based solution.
-2. Performance – Fast generation for typical receipt/invoice documents.
+2. Performance – Fast generation for typical receipt/invoice documents, with a simple concurrency limit around wkhtmltopdf.
 3. Maintainability – Easy-to-edit templates using HTML + CSS.
 
 --------------------------------------------------
@@ -41,8 +41,15 @@ HTML Templates + Handlebars vs Low-Level PDF Libraries
   - Loops: {{#each items}} ... {{/each}}
 - Easier to maintain and change layout than low-level PDF libraries (iText, pdfkit, etc.), where layout is code.
 
-This stack gives a good balance between:
-- Performance & resource usage (lighter than browser-based).
+Concurrency Limit for wkhtmltopdf
+---------------------------------
+
+- The service wraps wkhtmltopdf calls in a simple in-memory queue with a maximum number of concurrent jobs (e.g. 3 at a time).
+- This prevents too many wkhtmltopdf processes from running in parallel, which helps keep CPU and RAM usage stable under load.
+- Extra requests wait in the queue until a slot is free, improving overall system stability.
+
+This stack and design give a good balance between:
+- Performance & resource usage (lighter than browser-based, controlled concurrency).
 - Maintainability (clean, editable templates).
 
 --------------------------------------------------
@@ -335,6 +342,10 @@ To update layouts:
 - No need to change core PDF or routing logic unless you change the data shape.
 
 --------------------------------------------------
-Future Improvement
+Future Improvements
 --------------------------------------------------
--Send to the customer email.
+
+- Add an option to send the generated PDF directly to the customer via email (e.g., SMTP or an email service API).
+- Add stronger request validation (e.g., JSON schema) and more detailed error responses.
+- Add more templates (quotation, delivery note, credit note) using the same pattern.
+- Externalize templates (e.g., load from a database or CMS) so non-developers can update them without redeploying the service.
